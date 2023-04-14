@@ -9,9 +9,9 @@ from transformers import (
     PreTrainedTokenizer,
     T5ForConditionalGeneration,
 )
-from transformers.generation_utils import (
-    GenerationMixin,
-    SampleOutput,
+from transformers.generation_utils import GenerationMixin
+from transformers.generation import (
+    # SampleOutput,
     SampleEncoderDecoderOutput,
     SampleDecoderOnlyOutput,
 )
@@ -207,7 +207,7 @@ class SelfDebiasingGPT2LMHeadModel(GPT2LMHeadModel, GenerationMixin):
         output_scores: Optional[bool] = None,
         return_dict_in_generate: Optional[bool] = None,
         **model_kwargs,
-    ) -> Union[SampleOutput, torch.LongTensor]:
+    ) -> Union[SampleEncoderDecoderOutput, torch.LongTensor]:
         """
         This is a verbatim copy of the original implementation by huggingface, with a single modification to ensure that a text and all
         corresponding self-debiasing inputs always chose the same token to generate next. This modification is enclosed by the texts

@@ -11,6 +11,10 @@ class BertModel:
     def __new__(self, model_name_or_path):
         return transformers.BertModel.from_pretrained(model_name_or_path)
 
+class SwitchModel:
+    def __new__(self, model_name_or_path):
+        return transformers.SwitchTransformersEncoderModel.from_pretrained("google/switch-base-8")
+
 
 class AlbertModel:
     def __new__(self, model_name_or_path):

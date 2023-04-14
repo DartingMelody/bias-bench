@@ -42,7 +42,7 @@ parser.add_argument(
     action="store",
     type=str,
     default="bert-base-uncased",
-    choices=["bert-base-uncased", "albert-base-v2", "roberta-base", "gpt2"],
+    choices=["bert-base-uncased", "albert-base-v2", "roberta-base", "gpt2", "switch-base-8"],
     help="HuggingFace model name or path (e.g., bert-base-uncased). Checkpoint from which a "
     "model is instantiated.",
 )
@@ -51,7 +51,7 @@ parser.add_argument(
     action="store",
     type=str,
     default="BertModel",
-    choices=["BertModel", "AlbertModel", "RobertaModel", "GPT2Model"],
+    choices=["BertModel", "AlbertModel", "RobertaModel", "GPT2Model", "SwitchModel"],
     help="Model to evalute (e.g., BertModel). Typically, these correspond to a HuggingFace "
     "class.",
 )
@@ -75,7 +75,11 @@ if __name__ == "__main__":
     # Load model and tokenizer.
     model = getattr(models, args.model)(args.model_name_or_path)
     model.eval()
-    tokenizer = transformers.AutoTokenizer.from_pretrained(args.model_name_or_path)
+    print("model name or path:", args.model_name_or_path)
+    if(args.model_name_or_path == "switch-base-8"):
+        tokenizer = transformers.AutoTokenizer.from_pretrained("google/switch-base-8")
+    else:
+        tokenizer = transformers.AutoTokenizer.from_pretrained(args.model_name_or_path)
 
     runner = SEATRunner(
         experiment_id=experiment_id,
