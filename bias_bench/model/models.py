@@ -6,7 +6,6 @@ import transformers
 from bias_bench.debias.self_debias.modeling import GPT2Wrapper
 from bias_bench.debias.self_debias.modeling import MaskedLMWrapper
 
-
 class BertModel:
     def __new__(self, model_name_or_path):
         return transformers.BertModel.from_pretrained(model_name_or_path)
@@ -325,6 +324,18 @@ class BertForSequenceClassification:
         )
         return model
 
+class SwitchModelForSequenceClassification:
+    def __new__(self, model_name_or_path, config):
+        model = transformers.SwitchTransformersForConditionalGeneration.from_pretrained("google/switch-base-8")
+        return model
+
+
+class SentenceDebiasSwitchModel(_SentenceDebiasModel):
+    def __new__(self, model_name_or_path, bias_direction, config):
+        super().__init__(self, model_name_or_path, bias_direction)
+        model = transformers.SwitchTransformersForConditionalGeneration.from_pretrained("google/switch-base-8")
+        model.encoder.register_forward_hook(self.func)
+        return model
 
 class AlbertForSequenceClassification:
     def __new__(self, model_name_or_path, config):
