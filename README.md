@@ -26,7 +26,7 @@ Wikipedia-10 | [Download](https://drive.google.com/file/d/1boQTn44RnHdxWeUKQAlRg
 Each dataset should be downloaded to the specified path, relative to the root directory of the project.
 
 ## Experiments
-After installation and downloading dataset, to run experiments in the report, please check out Experiment.MD.
+**After installation and downloading dataset, to run experiments in the report, please check out Experiment.MD.**
 
 We provide scripts for running all of the experiments presented in the paper.
 Generally, each script takes a `--model` argument and a `--model_name_or_path` argument.
