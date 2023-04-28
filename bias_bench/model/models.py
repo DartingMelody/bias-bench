@@ -164,6 +164,12 @@ class INLPBertModel(_INLPModel):
         model.encoder.register_forward_hook(self.func)
         return model
 
+class INLPSwitchModel(_INLPModel):
+    def __new__(self, model_name_or_path, projection_matrix):
+        super().__init__(self, model_name_or_path, projection_matrix)
+        model = transformers.SwitchTransformersEncoderModel.from_pretrained("google/switch-base-8")
+        model.encoder.register_forward_hook(self.func)
+        return model
 
 class INLPAlbertModel(_INLPModel):
     def __new__(self, model_name_or_path, projection_matrix):
@@ -510,6 +516,9 @@ class SelfDebiasBertForMaskedLM:
         model = MaskedLMWrapper(model_name_or_path)
         return model
 
+class SwitchForMaskedLM:
+    def __new__(self, model_name_or_path):
+        return transformers.SwitchTransformersModel.from_pretrained("google/switch-base-8")
 
 class SelfDebiasAlbertForMaskedLM:
     def __new__(self, model_name_or_path):
